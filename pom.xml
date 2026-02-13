@@ -30,32 +30,41 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
-        <!--
+        <!--ORM-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+        <!--web mvc-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
 
+        <!--web mvc-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+        <!--postgresql driver-->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+        <!--swagger-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <!--testing-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
@@ -71,7 +80,8 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+
+    </dependencies>
 
 	<build>
 		<plugins>
@@ -79,6 +89,29 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+            <!--
+            <plugin>
+              <groupId>com.dkanejs.maven.plugins</groupId>
+              <artifactId>docker-compose-maven-plugin</artifactId>
+              <version>4.0.0</version>
+              <executions>
+                  <execution>
+                      <id>docker-start</id>
+                      <phase>validate</phase>
+                      <goals>
+                          <goal>up</goal>
+                      </goals>
+                  </execution>
+                  <execution>
+                      <id>docker-stop</id>
+                      <phase>post-clean</phase>
+                      <goals>
+                          <goal>down</goal>
+                      </goals>
+                  </execution>
+              </executions>
+            </plugin>
+            -->
 		</plugins>
 	</build>
 

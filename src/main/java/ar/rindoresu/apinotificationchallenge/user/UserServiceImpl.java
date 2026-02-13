@@ -1,5 +1,6 @@
 package ar.rindoresu.apinotificationchallenge.user;
 
+import ar.rindoresu.apinotificationchallenge.pokemon.client.PokemonClient;
 import ar.rindoresu.apinotificationchallenge.user.dto.UserRequest;
 import ar.rindoresu.apinotificationchallenge.user.dto.UserResponse;
 import ar.rindoresu.apinotificationchallenge.user.exception.UserNotFoundException;
@@ -12,14 +13,16 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
     private final UserRepository repo;
+    private final PokemonClient pokemonClient;
 
-    public UserServiceImpl(UserRepository repo) {
+    public UserServiceImpl(UserRepository repo, PokemonClient pokemonClient) {
         this.repo = repo;
+        this.pokemonClient = pokemonClient;
     }
 
     @Override
     public UserResponse create(UserRequest req) {
-        User user = new User(req.getEmail(), req.getUsername(), req.getPassword());
+        User user = new User(req.getEmail(), req.getUsername(), req.getPassword(), req.getPokemonIds());
         return toResponse(repo.save(user));
     }
 
@@ -43,6 +46,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(req.getUsername());
         user.setEmail(req.getEmail());
         user.setPassword(req.getPassword());
+        user.setPokemonIds(req.getPokemonIds());
 
         return toResponse(repo.save(user));
     }
@@ -55,7 +59,16 @@ public class UserServiceImpl implements UserService {
         repo.deleteById(id);
     }
 
-    private UserResponse toResponse(User user) {
-        return new UserResponse(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
+    public UserResponse toResponse(User user) {
+        List<String> pokemonNames = user.getPokemonIds().stream()
+                .map(pokemonClient::getPokemonName)
+                .toList();
+        return new UserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getPassword(),
+                pokemonNames
+        );
     }
 }

@@ -20,6 +20,9 @@ public class UserRequest {
     @NotBlank(groups = Create.class, message = "Password is required")
     private String password;
 
+    // Pokémon IDs the user owns
+    private List<Integer> pokemonIds;
+
     public String getUsername() {
         return username;
     }
@@ -44,10 +47,19 @@ public class UserRequest {
         this.password = password;
     }
 
-    public UserRequest(String username, String email, String password) {
+    public List<Integer> getPokemonIds() {
+        return pokemonIds;
+    }
+
+    public void setPokemonIds(List<Integer> pokemonIds) {
+        this.pokemonIds = pokemonIds;
+    }
+
+    public UserRequest(String username, String email, String password, List<Integer> pokemonIds) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.pokemonIds = pokemonIds;
     }
 
     public UserRequest() {

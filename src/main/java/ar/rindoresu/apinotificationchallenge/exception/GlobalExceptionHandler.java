@@ -1,5 +1,6 @@
 package ar.rindoresu.apinotificationchallenge.exception;
 
+import ar.rindoresu.apinotificationchallenge.pokemon.exception.PokemonNotFoundException;
 import ar.rindoresu.apinotificationchallenge.user.exception.UserNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -38,4 +39,11 @@ public class GlobalExceptionHandler {
         );
         return errors;
     }
+
+    @ExceptionHandler(PokemonNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handlePokemonNotFound(PokemonNotFoundException ex) {
+        return Map.of("error", ex.getMessage());
+    }
+
 }

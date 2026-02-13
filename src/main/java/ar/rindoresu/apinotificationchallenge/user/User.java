@@ -22,12 +22,18 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @ElementCollection
+    @CollectionTable(name = "user_pokemon", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "pokemon_id")
+    private List<Integer> pokemonIds = new ArrayList<>();
+
     public User() {}
 
-    public User(String email, String username, String password) {
+    public User(String email, String username, String password, List<Integer> pokemonIds) {
         this.email = email;
         this.username = username;
         this.password = password;
+        this.pokemonIds = pokemonIds;
     }
 
     public Long getId() {
@@ -56,5 +62,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Integer> getPokemonIds() {
+        return pokemonIds;
+    }
+
+    public void setPokemonIds(List<Integer> pokemonIds) {
+        this.pokemonIds = pokemonIds;
     }
 }

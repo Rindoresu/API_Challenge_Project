@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserResponse toResponse(User user) {
-        List<String> pokemonNames = user.getPokemonIds().stream()
+        List<String> pokemonNames = user.getPokemonIds().parallelStream()//.stream() // es lo mismo pero como esto es de prueba lo hago con threading, pero probablemente para pedidos http no es buena idea.
                 .map(pokemonClient::getPokemonName)
                 .toList();
         return new UserResponse(

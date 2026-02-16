@@ -9,10 +9,15 @@ import java.util.Map;
 @Service
 public class PokemonClient {
 
+    private final PokemonApiProperties props;
     private final RestTemplate restTemplate = new RestTemplate();
 
+    public PokemonClient(PokemonApiProperties props) {
+        this.props = props;
+    }
+
     public String getPokemonName(int id) {
-        String url = "https://pokeapi.co/api/v2/pokemon/" + id;
+        String url = props.getUrl() + "/" + id;
 
         try {
             Map response = restTemplate.getForObject(url, Map.class);

@@ -2,7 +2,6 @@ package ar.rindoresu.apinotificationchallenge.user;
 
 import ar.rindoresu.apinotificationchallenge.api.BaseIntegrationTest;
 import ar.rindoresu.apinotificationchallenge.pokemon.client.PokemonClient;
-import ar.rindoresu.apinotificationchallenge.pokemon.exception.PokemonNotFoundException;
 import ar.rindoresu.apinotificationchallenge.user.dto.UserRequest;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,14 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.context.WebApplicationContext;
-
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserIntegrationTest extends BaseIntegrationTest {
+class UserIntegrationTest2 extends BaseIntegrationTest {
 
     private WebTestClient webTestClient;
 
@@ -35,17 +32,11 @@ class UserIntegrationTest extends BaseIntegrationTest {
     @MockitoSpyBean
     private PokemonClient pokemonClient;
 
-    private User savedUser;
-
     @BeforeEach
     void setup() {
         userRepository.deleteAll();
-        User u = new User(
-                "ash",
-                "ash@kanto.com",
-                "pikachu123",
-                List.of(25, 1));
-        savedUser = userRepository.save(u);
+        User u = new User("ash", "pikachu123", "ash@kanto.com", List.of(25, 1));
+        userRepository.save(u);
 
         this.webTestClient = WebTestClient.bindToServer()
                 .baseUrl("http://localhost:" + port) // optional, for nicer logs
@@ -58,15 +49,11 @@ class UserIntegrationTest extends BaseIntegrationTest {
         // Arrange: mock Pokémon API responses
         Mockito.doReturn("pikachu").when(pokemonClient).getPokemonName(25);
         Mockito.doReturn("bulbasaur").when(pokemonClient).getPokemonName(1);
-        Mockito.doThrow(new PokemonNotFoundException(-45))
-                .when(pokemonClient)
-                .getPokemonName(-45);
-
 
         UserRequest request = new UserRequest(
                 "misty",
-                "misty@kanto.com",
                 "water123",
+                "misty@kanto.com",
                 List.of(25, 1)
         );
 
@@ -108,7 +95,9 @@ class UserIntegrationTest extends BaseIntegrationTest {
                 .exchange()
                 .expectStatus().isBadRequest()
                 .expectBody()
-                .jsonPath("$.error").exists();
+                .jsonPath("$.errors").exists();
+
+        Mockito.verifyNoInteractions(pokemonClient);
     }
 
     @Test
@@ -121,7 +110,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
         );
 
         assertBadRequest(request);
-        Mockito.verifyNoInteractions(pokemonClient);
     }
 
     @Test
@@ -134,7 +122,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
         );
 
         assertBadRequest(request);
-        Mockito.verifyNoInteractions(pokemonClient);
     }
 
     @Test
@@ -147,7 +134,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
         );
 
         assertBadRequest(request);
-        Mockito.verifyNoInteractions(pokemonClient);
     }
 
     @Test
@@ -160,7 +146,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
         );
 
         assertBadRequest(request);
-        Mockito.verifyNoInteractions(pokemonClient);
     }
 
     @Test
@@ -173,7 +158,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
         );
 
         assertBadRequest(request);
-        Mockito.verifyNoInteractions(pokemonClient);
     }
 
     @Test
@@ -186,7 +170,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
         );
 
         assertBadRequest(request);
-        Mockito.verify(pokemonClient,Mockito.times(1)).getPokemonName(-45);
     }
 
     @Test
@@ -199,8 +182,8 @@ class UserIntegrationTest extends BaseIntegrationTest {
 
         UserRequest request = new UserRequest(
                 "ash", // same username
-                "newemail@kanto.com",
                 "newpass123",
+                "newemail@kanto.com",
                 List.of(1)
         );
 
@@ -212,7 +195,7 @@ class UserIntegrationTest extends BaseIntegrationTest {
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT)
                 .expectBody()
-                .jsonPath("$.error").exists();
+                .jsonPath("$.message").exists();
 
         // Pokémon API should NOT be called
         Mockito.verifyNoInteractions(pokemonClient);
@@ -233,8 +216,8 @@ class UserIntegrationTest extends BaseIntegrationTest {
 
         UserRequest request = new UserRequest(
                 "misty",
-                "ash@kanto.com", // same email
                 "water123",
+                "ash@kanto.com", // same email
                 List.of(1)
         );
 
@@ -246,7 +229,7 @@ class UserIntegrationTest extends BaseIntegrationTest {
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT)
                 .expectBody()
-                .jsonPath("$.error").exists();
+                .jsonPath("$.message").exists();
 
         // Pokémon API should NOT be called
         Mockito.verifyNoInteractions(pokemonClient);
@@ -264,7 +247,7 @@ class UserIntegrationTest extends BaseIntegrationTest {
         Mockito.doReturn("bulbasaur").when(pokemonClient).getPokemonName(1);
 
         webTestClient.get()
-                .uri("/api/users/" + savedUser.getId())
+                .uri("/api/users/ash")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()

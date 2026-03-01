@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse create(UserRequest req) {
-        User user = new User(req.getEmail(), req.getUsername(), req.getPassword(), req.getPokemonIds());
+        User user = new User(req.getUsername(), req.getEmail(), req.getPassword(), req.getPokemonIds());
         return toResponse(repo.save(user));
     }
 

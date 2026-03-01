@@ -29,9 +29,9 @@ public class User {
 
     public User() {}
 
-    public User(String email, String username, String password, List<Integer> pokemonIds) {
-        this.email = email;
+    public User(String username, String email, String password, List<Integer> pokemonIds) {
         this.username = username;
+        this.email = email;
         this.password = password;
         this.pokemonIds = pokemonIds;
     }

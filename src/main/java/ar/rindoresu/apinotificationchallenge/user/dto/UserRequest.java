@@ -2,6 +2,7 @@ package ar.rindoresu.apinotificationchallenge.user.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class UserRequest {
     private String password;
 
     // Pokémon IDs the user owns
+    @NotNull(groups = {Create.class, Update.class}, message = "You need to provide a Pokemon List with valid IDs")
     private List<Integer> pokemonIds;
 
     public String getUsername() {

@@ -8,4 +8,5 @@ public record UserResponse(
         String email,
         String password,
         List<String> pokemonNames
-) {}
+) {
+}

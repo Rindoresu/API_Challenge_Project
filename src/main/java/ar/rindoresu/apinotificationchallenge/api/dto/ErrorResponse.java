@@ -1,3 +1,4 @@
 package ar.rindoresu.apinotificationchallenge.api.dto;
 
-public record ErrorResponse(String error) {}
+public record ErrorResponse(String error) {
+}

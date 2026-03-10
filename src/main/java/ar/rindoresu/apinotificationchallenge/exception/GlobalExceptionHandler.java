@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
                 .stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .toList();
-        
+
         return new ValidationErrorResponse("Validation failed", errors);
     }
 

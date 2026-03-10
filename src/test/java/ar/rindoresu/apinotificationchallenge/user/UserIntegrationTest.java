@@ -22,11 +22,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UserIntegrationTest extends AbstractIntegrationTest {
 
-    private WebTestClient webTestClient;
-
     @LocalServerPort
     int port;
-
+    private WebTestClient webTestClient;
     @Autowired
     private UserRepository userRepository;
 
@@ -183,7 +181,7 @@ class UserIntegrationTest extends AbstractIntegrationTest {
         );
 
         assertBadRequest(request);
-        Mockito.verify(pokemonClient,Mockito.times(1)).getPokemonName(-45);
+        Mockito.verify(pokemonClient, Mockito.times(1)).getPokemonName(-45);
     }
 
     @Test

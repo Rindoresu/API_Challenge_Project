@@ -1,13 +1,12 @@
 package ar.rindoresu.apinotificationchallenge.user;
 
-import ar.rindoresu.apinotificationchallenge.api.BaseIntegrationTest;
+import ar.rindoresu.apinotificationchallenge.api.AbstractIntegrationTest;
 import ar.rindoresu.apinotificationchallenge.pokemon.client.PokemonClient;
 import ar.rindoresu.apinotificationchallenge.pokemon.exception.PokemonNotFoundException;
-import ar.rindoresu.apinotificationchallenge.user.dto.UserRequest;
+import ar.rindoresu.apinotificationchallenge.api.dto.UserRequest;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -15,14 +14,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.context.WebApplicationContext;
 
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserIntegrationTest extends BaseIntegrationTest {
+class UserIntegrationTest extends AbstractIntegrationTest {
 
     private WebTestClient webTestClient;
 
@@ -87,17 +85,16 @@ class UserIntegrationTest extends BaseIntegrationTest {
                 });
 
         // Verify the mock was actually used
-        InOrder inOrder = Mockito.inOrder(pokemonClient);
         Mockito.verify(pokemonClient, Mockito.times(1)).getPokemonName(25);
         Mockito.verify(pokemonClient, Mockito.times(1)).getPokemonName(1);
         Mockito.verifyNoMoreInteractions(pokemonClient);
 
         // Verify the user was actually saved in the DB
         List<User> users = userRepository.findAll();
-        assertThat(users).hasSize(2); // ash + misty
-        assertThat(users)
+        assertThat(users).hasSize(2) // ash + misty
                 .anyMatch(u -> u.getUsername().equals("misty")
-                        && u.getEmail().equals("misty@kanto.com"));
+                        && u.getEmail().equals("misty@kanto.com")
+                );
     }
 
     private void assertBadRequest(UserRequest request) {
@@ -191,11 +188,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void testCreateUser_Conflict_UsernameAlreadyExists() {
-        // Arrange: DB already has "ash"
-        /* We already do this in the BeforeEach
-        User existing = new User("ash", "pikachu123", "ash@kanto.com", List.of(25));
-        userRepository.save(existing);
-         */
 
         UserRequest request = new UserRequest(
                 "ash", // same username
@@ -225,11 +217,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void testCreateUser_Conflict_EmailAlreadyExists() {
-        // Arrange: DB already has "ash"
-        /* We already do this in the BeforeEach
-        User existing = new User("ash", "pikachu123", "ash@kanto.com", List.of(25));
-        userRepository.save(existing);
-         */
 
         UserRequest request = new UserRequest(
                 "misty",
@@ -276,10 +263,8 @@ class UserIntegrationTest extends BaseIntegrationTest {
                 });
 
         // Verify the mock was actually used
-        InOrder inOrder = Mockito.inOrder(pokemonClient);
-        Mockito.verify(pokemonClient, Mockito.times(1)).getPokemonName(25);
-        Mockito.verify(pokemonClient, Mockito.times(1)).getPokemonName(1);
+        Mockito.verify(pokemonClient).getPokemonName(25);
+        Mockito.verify(pokemonClient).getPokemonName(1);
         Mockito.verifyNoMoreInteractions(pokemonClient);
-
     }
 }

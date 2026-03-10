@@ -1,4 +1,4 @@
-package ar.rindoresu.apinotificationchallenge.user.dto;
+package ar.rindoresu.apinotificationchallenge.api.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,32 +29,16 @@ public class UserRequest {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public List<Integer> getPokemonIds() {
         return pokemonIds;
-    }
-
-    public void setPokemonIds(List<Integer> pokemonIds) {
-        this.pokemonIds = pokemonIds;
     }
 
     public UserRequest(String username, String email, String password, List<Integer> pokemonIds) {
@@ -64,6 +48,5 @@ public class UserRequest {
         this.pokemonIds = pokemonIds;
     }
 
-    public UserRequest() {
-    }
+    public UserRequest() {}
 }

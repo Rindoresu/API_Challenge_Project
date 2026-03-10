@@ -1,12 +1,20 @@
 package ar.rindoresu.apinotificationchallenge.user;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinColumn;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -27,7 +35,8 @@ public class User {
     @Column(name = "pokemon_id")
     private List<Integer> pokemonIds = new ArrayList<>();
 
-    public User() {}
+    public User() {
+    }
 
     public User(String username, String email, String password, List<Integer> pokemonIds) {
         this.username = username;

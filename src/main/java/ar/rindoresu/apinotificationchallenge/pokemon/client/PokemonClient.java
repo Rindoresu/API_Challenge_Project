@@ -1,7 +1,9 @@
 package ar.rindoresu.apinotificationchallenge.pokemon.client;
 
+import ar.rindoresu.apinotificationchallenge.api.dto.PokemonResponse;
 import ar.rindoresu.apinotificationchallenge.pokemon.exception.PokemonNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
@@ -20,9 +22,9 @@ public class PokemonClient {
         String url = props.getUrl() + "/" + id;
 
         try {
-            Map response = restTemplate.getForObject(url, Map.class);
-            return (String) response.get("name");
-        } catch (Exception e) {
+            PokemonResponse response = restTemplate.getForObject(url, PokemonResponse.class);
+            return (String) response.name();
+        } catch (HttpClientErrorException.NotFound e) {
             throw new PokemonNotFoundException(id);
         }
     }

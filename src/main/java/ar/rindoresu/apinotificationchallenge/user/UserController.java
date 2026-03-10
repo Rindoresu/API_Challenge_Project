@@ -1,16 +1,21 @@
 package ar.rindoresu.apinotificationchallenge.user;
 
-import ar.rindoresu.apinotificationchallenge.user.dto.UserRequest;
-import ar.rindoresu.apinotificationchallenge.user.dto.UserResponse;
+import ar.rindoresu.apinotificationchallenge.api.dto.UserRequest;
+import ar.rindoresu.apinotificationchallenge.api.dto.UserResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.responses.FailedApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -29,14 +34,13 @@ public class UserController {
     // 1. CREATE
     // -----------------------------
     @Operation(summary = "Create a new user")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "User created successfully"),
-            @ApiResponse(responseCode = "400", description = "User values are invalid"),
-            @ApiResponse(responseCode = "409", description = "Username or email already exists")
-    })
+    @ApiResponse(responseCode = "201", description = "User created successfully")
+    @ApiResponse(responseCode = "400", description = "User values are invalid")
+    @ApiResponse(responseCode = "409", description = "Username or email already exists")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponse create(@Validated(UserRequest.Create.class) @RequestBody UserRequest request) {
+    public UserResponse create(
+            @Validated(UserRequest.Create.class) @RequestBody UserRequest request) {
         return service.create(request);
     }
 
@@ -44,9 +48,7 @@ public class UserController {
     // 2. READ ALL
     // -----------------------------
     @Operation(summary = "Get all users")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "List of users")
-    })
+    @ApiResponse(responseCode = "200", description = "List of users")
     @GetMapping
     public List<UserResponse> findAll() {
         return service.findAll();
@@ -56,10 +58,8 @@ public class UserController {
     // 3. READ BY ID
     // -----------------------------
     @Operation(summary = "Get a user by ID")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "User found"),
-        @ApiResponse(responseCode = "404", description = "User not found")
-    })
+    @ApiResponse(responseCode = "200", description = "User found")
+    @ApiResponse(responseCode = "404", description = "User not found")
     @GetMapping("/{id}")
     public UserResponse findById(@PathVariable Long id) {
         return service.findById(id);
@@ -69,14 +69,13 @@ public class UserController {
     // 4. UPDATE
     // -----------------------------
     @Operation(summary = "Update a user by ID")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "User updated"),
-        @ApiResponse(responseCode = "400", description = "User values are invalid"),
-        @ApiResponse(responseCode = "404", description = "User not found"),
-        @ApiResponse(responseCode = "409", description = "Username or email already exists")
-    })
+    @ApiResponse(responseCode = "200", description = "User updated")
+    @ApiResponse(responseCode = "400", description = "User values are invalid")
+    @ApiResponse(responseCode = "404", description = "User not found")
+    @ApiResponse(responseCode = "409", description = "Username or email already exists")
     @PutMapping("/{id}")
-    public UserResponse updateUser(@PathVariable Long id, @Validated(UserRequest.Update.class) @RequestBody UserRequest request) {
+    public UserResponse updateUser(@PathVariable Long id,
+                                   @Validated(UserRequest.Update.class) @RequestBody UserRequest request) {
         return service.update(id, request);
     }
 
@@ -84,10 +83,8 @@ public class UserController {
     // 5. DELETE
     // -----------------------------
     @Operation(summary = "Delete a user by ID")
-    @ApiResponses({
-        @ApiResponse(responseCode = "204", description = "User deleted"),
-        @ApiResponse(responseCode = "404", description = "User not found")
-    })
+    @ApiResponse(responseCode = "204", description = "User deleted")
+    @ApiResponse(responseCode = "404", description = "User not found")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {

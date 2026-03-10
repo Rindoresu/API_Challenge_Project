@@ -1,8 +1,8 @@
 package ar.rindoresu.apinotificationchallenge.user;
 
 import ar.rindoresu.apinotificationchallenge.pokemon.client.PokemonClient;
-import ar.rindoresu.apinotificationchallenge.user.dto.UserRequest;
-import ar.rindoresu.apinotificationchallenge.user.dto.UserResponse;
+import ar.rindoresu.apinotificationchallenge.api.dto.UserRequest;
+import ar.rindoresu.apinotificationchallenge.api.dto.UserResponse;
 import ar.rindoresu.apinotificationchallenge.user.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -60,7 +60,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserResponse toResponse(User user) {
-        List<String> pokemonNames = user.getPokemonIds().parallelStream()//.stream() // es lo mismo pero como esto es de prueba lo hago con threading, pero probablemente para pedidos http no es buena idea.
+        List<String> pokemonNames = user.getPokemonIds().parallelStream()// .stream()
+                // parallelStream is faster than stream but having an
+                // unlimited amount of http connections is a smell.
                 .map(pokemonClient::getPokemonName)
                 .toList();
         return new UserResponse(

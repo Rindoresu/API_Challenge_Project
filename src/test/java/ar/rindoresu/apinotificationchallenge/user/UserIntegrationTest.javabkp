@@ -1,6 +1,6 @@
 package ar.rindoresu.apinotificationchallenge.user;
 
-import ar.rindoresu.apinotificationchallenge.api.BaseIntegrationTest;
+import ar.rindoresu.apinotificationchallenge.api.AbstractIntegrationTest;
 import ar.rindoresu.apinotificationchallenge.pokemon.client.PokemonClient;
 import ar.rindoresu.apinotificationchallenge.user.dto.UserRequest;
 import org.assertj.core.api.InstanceOfAssertFactories;

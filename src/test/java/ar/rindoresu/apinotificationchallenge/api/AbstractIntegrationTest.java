@@ -5,5 +5,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class BaseIntegrationTest {
+public abstract class AbstractIntegrationTest {
+
+    protected AbstractIntegrationTest() {
+        // prevents instantiation
+    }
+
 }

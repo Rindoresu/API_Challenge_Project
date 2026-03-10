@@ -124,29 +124,6 @@
                     <argLine>@{argLine} -javaagent:${org.mockito:mockito-core:jar}</argLine>
                 </configuration>
             </plugin>
-            <!--
-            <plugin>
-              <groupId>com.dkanejs.maven.plugins</groupId>
-              <artifactId>docker-compose-maven-plugin</artifactId>
-              <version>4.0.0</version>
-              <executions>
-                  <execution>
-                      <id>docker-start</id>
-                      <phase>validate</phase>
-                      <goals>
-                          <goal>up</goal>
-                      </goals>
-                  </execution>
-                  <execution>
-                      <id>docker-stop</id>
-                      <phase>post-clean</phase>
-                      <goals>
-                          <goal>down</goal>
-                      </goals>
-                  </execution>
-              </executions>
-            </plugin>
-            -->
 		</plugins>
 	</build>
 

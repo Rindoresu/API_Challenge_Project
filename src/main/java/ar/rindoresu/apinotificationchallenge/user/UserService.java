@@ -1,7 +1,7 @@
 package ar.rindoresu.apinotificationchallenge.user;
 
-import ar.rindoresu.apinotificationchallenge.user.dto.UserRequest;
-import ar.rindoresu.apinotificationchallenge.user.dto.UserResponse;
+import ar.rindoresu.apinotificationchallenge.api.dto.UserRequest;
+import ar.rindoresu.apinotificationchallenge.api.dto.UserResponse;
 
 import java.util.List;
 

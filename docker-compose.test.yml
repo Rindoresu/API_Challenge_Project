@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: build
-    command: ["mvn", "-q", "-Dtest=UserIntegrationTest", "test"]
+    command: ["mvn", "-Dtest=UserIntegrationTest", "test"]
     environment:
       SPRING_PROFILES_ACTIVE: test
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_test:5432/apichallengedb_test
@@ -24,7 +24,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - postgres_test_data:/var/lib/postgresql/data
+      - postgres_test_data:/var/lib/postgresql/test_data
 
 volumes:
   postgres_test_data:

@@ -6,7 +6,7 @@ accept this `Content-type: application/json`.
 
 ### Badges
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/3VQFRDsiSjeHHg9ASnahfn/W9HrkTVEbxjRxVupqE7yFe/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/3VQFRDsiSjeHHg9ASnahfn/W9HrkTVEbxjRxVupqE7yFe/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/3VQFRDsiSjeHHg9ASnahfn/W9HrkTVEbxjRxVupqE7yFe/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/3VQFRDsiSjeHHg9ASnahfn/W9HrkTVEbxjRxVupqE7yFe/tree/master)
 
 ### App Features
 

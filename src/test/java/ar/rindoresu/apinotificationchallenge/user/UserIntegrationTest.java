@@ -46,19 +46,18 @@ class UserIntegrationTest extends AbstractIntegrationTest {
         this.webTestClient = WebTestClient.bindToServer()
                 .baseUrl("http://localhost:" + port) // optional, for nicer logs
                 .build();
-    }
 
-
-    @Test
-    void testCreateUser() {
         // Arrange: mock Pokémon API responses
         Mockito.doReturn("pikachu").when(pokemonClient).getPokemonName(25);
         Mockito.doReturn("bulbasaur").when(pokemonClient).getPokemonName(1);
         Mockito.doThrow(new PokemonNotFoundException(-45))
                 .when(pokemonClient)
                 .getPokemonName(-45);
+    }
 
 
+    @Test
+    void testCreateUser() {
         UserRequest request = new UserRequest(
                 "misty",
                 "misty@kanto.com",

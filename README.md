@@ -4,6 +4,10 @@ You have to build a microservice that exposes a REST API with two different tabl
 Both tables should be open to creation, deletion, or update. Every request must only 
 accept this `Content-type: application/json`. 
 
+### Badges
+
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/3VQFRDsiSjeHHg9ASnahfn/W9HrkTVEbxjRxVupqE7yFe/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/3VQFRDsiSjeHHg9ASnahfn/W9HrkTVEbxjRxVupqE7yFe/tree/main)
+
 ### App Features
 
 - Create new Users including their Pokemon IDs

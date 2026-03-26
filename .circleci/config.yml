@@ -28,7 +28,7 @@ jobs:
 
       - run:
           name: Run integration tests with coverage
-          command: mvn -Dtest=UserIntegrationTest -X test
+          command: mvn -Dtest=UserIntegrationTest -X clean verify
 
       - run:
           name: List coverage files

@@ -3,6 +3,7 @@ version: 2.1
 jobs:
   test-java:
     docker:
+      # compare cimg/openjdk:21.0 vs maven:3.9.6-eclipse-temurin-21 vs gcr.io/distroless/java21 vs openjdk:13-jdk-alpine
       - image: cimg/openjdk:21.0
       - image: postgres:16
         environment:
@@ -28,11 +29,15 @@ jobs:
 
       - run:
           name: Run integration tests with coverage
-          command: mvn -Dtest=UserIntegrationTest test
+          command: mvn -Dtest=UserIntegrationTest clean verify
 
       - run:
           name: Upload coverage to Coveralls
-          command: mvn coveralls:report -DrepoToken=$COVERALLS_REPO_TOKEN
+          command: |
+            curl -L https://coveralls.io/coveralls-linux.tar.gz | tar -xz
+            ./coveralls --repo-token $COVERALLS_REPO_TOKEN \
+              --file target/site/jacoco/jacoco.xml \
+              --format jacoco
 
       - store_test_results:
           path: target/surefire-reports

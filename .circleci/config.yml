@@ -27,8 +27,12 @@ jobs:
             done
 
       - run:
-          name: Run integration tests
-          command: mvn -Dtest=UserIntegrationTest test
+          name: Run integration tests with coverage
+          command: mvn -Dtest=UserIntegrationTest test jacoco:report
+
+      - run:
+          name: Upload coverage to Coveralls
+          command: mvn coveralls:report -DrepoToken=$COVERALLS_REPO_TOKEN
 
       - store_test_results:
           path: target/surefire-reports

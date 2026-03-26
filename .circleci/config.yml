@@ -31,6 +31,16 @@ jobs:
           command: mvn -Dtest=UserIntegrationTest -X test
 
       - run:
+          name: List coverage files
+          command: |
+            ls -R
+            echo "----"
+            ls -l target || echo "no target dir"
+            echo "----"
+            ls -l target/jacoco.exec || echo "no jacoco.exec"
+
+
+      - run:
           name: Upload coverage to Coveralls
           command: mvn -X coveralls:report -DrepoToken=$COVERALLS_REPO_TOKEN
 

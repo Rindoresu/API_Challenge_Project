@@ -7,6 +7,7 @@ accept this `Content-type: application/json`.
 ### Badges
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/3VQFRDsiSjeHHg9ASnahfn/W9HrkTVEbxjRxVupqE7yFe/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/3VQFRDsiSjeHHg9ASnahfn/W9HrkTVEbxjRxVupqE7yFe/tree/master)
+[![Coverage Status](https://coveralls.io/repos/github/Rindoresu/API_Challenge_Project/badge.svg?branch=fixing_Coveralls)](https://coveralls.io/github/Rindoresu/API_Challenge_Project?branch=fixing_Coveralls)
 
 ### App Features
 

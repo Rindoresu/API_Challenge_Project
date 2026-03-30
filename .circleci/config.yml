@@ -3,8 +3,8 @@ version: 2.1
 jobs:
   test-java:
     docker:
-      # compare cimg/openjdk:21.0 vs maven:3.9.6-eclipse-temurin-21 vs gcr.io/distroless/java21 vs openjdk:21-jdk-alpine
-      - image: 19-ea-jdk-alpine3.16
+      # compare cimg/openjdk:21.0 vs maven:3.9.6-eclipse-temurin-21 vs gcr.io/distroless/java21 vs openjdk:13-jdk-alpine
+      - image: gcr.io/distroless/java21
       - image: postgres:16
         environment:
           POSTGRES_USER: postgres

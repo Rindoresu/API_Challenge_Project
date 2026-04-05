@@ -57,8 +57,11 @@ wsl ./run-dev.sh
 
 - Spring/SpringBoot
 - Hibernate
+- Liquibase
 - Postgres
 - JUnit/Mockito
+- Maven
+- Docker
 
 ## Decisions made
 

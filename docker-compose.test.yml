@@ -6,9 +6,16 @@ services:
       context: .
       dockerfile: Dockerfile
       target: build
-    command: [ "/bin/sh", "-c", "mvn -Dtest=UserIntegrationTest test && mvn coveralls:report" ]
-    #command: ["/bin/sh", "-c", "mvn -Dtest=UserIntegrationTest test && mvn coveralls:report -DrepoToken=$COVERALLS_REPO_TOKEN"]
-    #command: ["mvn", "coveralls:report", "-DrepoToken=$COVERALLS_REPO_TOKEN", "&&"]
+    command: [ "/bin/sh", "-c",
+    "
+    mvn liquibase:update 
+      -Dliquibase.url=jdbc:postgresql://postgres_test:5432/apichallengedb_test 
+      -Dliquibase.username=postgres 
+      -Dliquibase.password=postgres 
+      -Dliquibase.driver=org.postgresql.Driver 
+      -Dliquibase.changeLogFile=src/main/resources/db/changelog/db.changelog-master.xml 
+      && 
+    mvn -Dtest=UserIntegrationTest test" ]
     environment:
       SPRING_PROFILES_ACTIVE: test
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_test:5432/apichallengedb_test

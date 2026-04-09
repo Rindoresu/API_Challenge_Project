@@ -27,6 +27,16 @@ jobs:
             done
 
       - run:
+          name: Run Liquibase migrations
+          command: |
+            mvn -q liquibase:update
+              -Dliquibase.url=jdbc:postgresql://localhost:5432/apichallengedb_test 
+              -Dliquibase.username=postgres 
+              -Dliquibase.password=postgres 
+              -Dliquibase.driver=org.postgresql.Driver 
+              -Dliquibase.changeLogFile=src/main/resources/db/changelog/db.changelog-master.xml
+
+      - run:
           name: Run integration tests with coverage
           command: mvn -Dtest=UserIntegrationTest clean verify
 

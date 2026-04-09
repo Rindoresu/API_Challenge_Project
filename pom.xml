@@ -160,7 +160,6 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>5.0.1</version>
                 <configuration>
-                    <propertyFile>src/main/resources/liquibase.properties</propertyFile>
                 </configuration>
             </plugin>
 

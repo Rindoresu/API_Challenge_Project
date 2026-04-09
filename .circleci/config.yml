@@ -27,6 +27,10 @@ jobs:
             done
 
       - run:
+          name: Prepare resources for Liquibase
+          command: mvn -q process-resources
+
+      - run:
           name: Run Liquibase migrations
           command: |
             mvn -q liquibase:update \
